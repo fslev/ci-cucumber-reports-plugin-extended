@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jenkins-ci.plugins</groupId>
+        <artifactId>plugin</artifactId>
+        <version>4.15</version>
+    </parent>
+
+    <groupId>io.github.fslev</groupId>
+    <artifactId>cucumber-reports-extended</artifactId>
+    <version>5.4.8</version>
+    <packaging>hpi</packaging>
+    <!-- This name and URL are added by the Jenkins when displaying help.html file -->
+    <name>Cucumber reports extended</name>
+    <url>https://github.com/jenkinsci/cucumber-reports-plugin</url>
+
+    <!-- some comments here: https://jenkins.io/doc/developer/plugin-development/dependency-management/ -->
+    <properties>
+        <slf4jVersion>1.7.30</slf4jVersion>
+        <java.level>8</java.level>
+        <enforcer.skip>true</enforcer.skip>
+    </properties>
+
+    <!-- get every artifact through repo.jenkins-ci.org, which proxies all
+        the artifacts that we need -->
+    <repositories>
+        <repository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <build>
+        <plugins>
+            <!--  release with
+            mvn clean release:prepare release:perform
+            once the release is completed, new version should be present here:
+            https://repo.jenkins-ci.org/releases/net/masterthought/jenkins/cucumber-reports/
+            and later after synchronization also here:
+            http://updates.jenkins-ci.org/update-center.json
+             -->
+            <plugin>
+                <groupId>org.eclipse.hudson.tools</groupId>
+                <artifactId>maven-hpi-plugin</artifactId>
+                <!-- explicitly specifying the latest version here because one we get from
+                     the parent POM tends to lag behind a bit -->
+                <version>3.0.3</version>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.5.3</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+
+    <dependencies>
+        <!-- to satisfy dependencies problem with different versions -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4jVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4jVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>token-macro</artifactId>
+            <version>2.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>structs</artifactId>
+            <version>1.20</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.fslev</groupId>
+            <artifactId>cucumber-reporting-extended</artifactId>
+            <version>5.4.8</version>
+        </dependency>
+    </dependencies>
+</project>
